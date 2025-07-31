@@ -1,0 +1,276 @@
+/* Pretendard 폰트 적용 */
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* 아주 연한 배경색 */
+    color: #343a40; /* 기본 텍스트 색상 */
+    line-height: 1.6;
+}
+
+/* 모든 요소의 box-sizing을 border-box로 설정하여 레이아웃 계산을 쉽게 합니다. */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 20px; /* 좌우 여백 */
+}
+
+/* 헤더 스타일 */
+.header {
+    background-color: #ffffff; /* 흰색 배경 */
+    border-bottom: 1px solid #e9ecef; /* 하단 경계선 */
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+    text-align: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4CAF50; /* 브랜드 포인트 컬러 */
+    margin: 0;
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.step-section {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px; /* 둥근 모서리 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* 부드러운 그림자 */
+}
+
+/* 단계 표시기 */
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* 각 단계 사이 간격 */
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* 단계 표시기 연결 선 */
+.step-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 20%; /* 시작 위치 */
+    right: 20%; /* 끝 위치 */
+    height: 2px;
+    background-color: #e0e0e0; /* 비활성 선 색상 */
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+.step {
+    font-size: 18px;
+    font-weight: 600;
+    color: #adb5bd; /* 비활성 텍스트 색상 */
+    padding: 10px 20px;
+    border-radius: 20px; /* 둥근 캡슐 형태 */
+    background-color: #f1f3f5; /* 비활성 배경색 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    position: relative;
+    z-index: 1; /* 선 위에 오도록 */
+}
+
+.step.active {
+    background-color: #4CAF50; /* 활성화된 단계의 포인트 컬러 */
+    color: #ffffff; /* 흰색 텍스트 */
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4); /* 활성 단계 그림자 */
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #343a40;
+}
+
+/* 필터 및 검색 옵션 */
+.filter-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.filter-options select,
+.filter-options input[type="text"] {
+    padding: 12px 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px; /* 둥근 모서리 */
+    font-size: 16px;
+    color: #495057;
+    outline: none; /* 포커스 시 기본 아웃라인 제거 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 부드러운 전환 */
+}
+
+.filter-options select:focus,
+.filter-options input[type="text"]:focus {
+    border-color: #4CAF50; /* 포커스 시 포인트 컬러 테두리 */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25); /* 포커스 시 그림자 */
+}
+
+/* 단말기 목록 그리드 */
+.device-list {
+    display: grid;
+    /* 자동으로 열 너비를 조절하고 최소 220px, 최대 1fr로 설정하여 반응형 그리드를 만듭니다. */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px; /* 그리드 항목 사이 간격 */
+    justify-content: center; /* 그리드 항목들을 가운데 정렬 */
+}
+
+/* 단말기 카드 */
+.device-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer; /* 클릭 가능함을 나타내는 커서 */
+    transition: all 0.3s ease; /* 모든 속성 변화에 부드러운 전환 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 기본 그림자 */
+    position: relative; /* 선택 아이콘 위치 조정을 위해 */
+}
+
+.device-card:hover {
+    border-color: #4CAF50; /* 호버 시 포인트 컬러 테두리 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 강조 */
+    transform: translateY(-3px); /* 살짝 위로 이동하는 효과 */
+}
+
+.device-card.selected {
+    border: 2px solid #4CAF50; /* 선택 시 두꺼운 포인트 컬러 테두리 */
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); /* 선택 시 그림자 강조 */
+}
+
+.device-card img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px; /* 이미지 둥근 모서리 */
+}
+
+.device-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #343a40;
+}
+
+.device-card p {
+    font-size: 15px;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* 선택 표시 아이콘 */
+.device-card.selected::after {
+    content: '✔'; /* 체크 표시 유니코드 */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border-radius: 50%; /* 원형 */
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 다음 단계 버튼 */
+.navigation-buttons {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.next-step-btn {
+    background-color: #6c757d; /* 비활성화 시 기본 색상 */
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: not-allowed; /* 기본은 비활성화 커서 */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none; /* 포커스 시 아웃라인 제거 */
+}
+
+/* 버튼이 비활성화되지 않았을 때의 스타일 */
+.next-step-btn:not([disabled]) {
+    background-color: #4CAF50; /* 활성화 시 포인트 컬러 */
+    cursor: pointer; /* 활성화 시 클릭 가능 커서 */
+}
+
+/* 활성화된 버튼에 마우스를 올렸을 때의 스타일 */
+.next-step-btn:not([disabled]):hover {
+    background-color: #43a047; /* 호버 시 약간 어둡게 */
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4); /* 호버 시 그림자 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .step-indicator {
+        flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+        gap: 15px;
+    }
+
+    .step-indicator::after {
+        left: 10%;
+        right: 10%;
+    }
+
+    .step {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .filter-options {
+        flex-direction: column; /* 세로로 정렬 */
+        align-items: stretch; /* 전체 너비 차지 */
+    }
+
+    .filter-options select,
+    .filter-options input[type="text"] {
+        width: 100%;
+    }
+
+    .device-list {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 더 작은 최소 너비 */
+    }
+
+    .device-card img {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-section {
+        padding: 20px;
+    }
+    .device-list {
+        grid-template-columns: 1fr; /* 모바일에서는 1열로 */
+    }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폰 보조금 계산기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">폰 보조금 계산기</h1>
+        </div>
+    </header>
+
+    <main class="main-content container">
+        <section class="step-section">
+            <div class="step-indicator">
+                <span class="step active">1. 단말기 선택</span>
+                <span class="step">2. 통신사/요금제</span>
+                <span class="step">3. 결과 확인</span>
+            </div>
+
+            <h2>원하는 단말기를 선택해주세요.</h2>
+            <div class="device-selection">
+                <div class="filter-options">
+                    <select id="manufacturer-filter">
+                        <option value="all">모든 제조사</option>
+                        <option value="samsung">삼성</option>
+                        <option value="apple">애플</option>
+                        <option value="lg">LG</option>
+                    </select>
+                    <input type="text" id="device-search" placeholder="모델명 검색...">
+                </div>
+
+                <div class="device-list">
+                    <div class="device-card" data-id="galaxy_s25" data-manufacturer="samsung">
+                        <img src="https://via.placeholder.com/150/4CAF50/FFFFFF?text=S25" alt="갤럭시 S25">
+                        <h3>갤럭시 S25</h3>
+                        <p>출고가: 1,200,000원</p>
+                    </div>
+                    <div class="device-card" data-id="iphone_17_pro" data-manufacturer="apple">
+                        <img src="https://via.placeholder.com/150/FFC107/FFFFFF?text=iP17" alt="아이폰 17 Pro">
+                        <h3>아이폰 17 Pro</h3>
+                        <p>출고가: 1,500,000원</p>
+                    </div>
+                    <div class="device-card" data-id="galaxy_z_flip7" data-manufacturer="samsung">
+                        <img src="https://via.placeholder.com/150/2196F3/FFFFFF?text=Flip7" alt="갤럭시 Z Flip 7">
+                        <h3>갤럭시 Z Flip 7</h3>
+                        <p>출고가: 1,350,000원</p>
+                    </div>
+                    <div class="device-card" data-id="iphone_se4" data-manufacturer="apple">
+                        <img src="https://via.placeholder.com/150/9C27B0/FFFFFF?text=iPSE4" alt="아이폰 SE 4">
+                        <h3>아이폰 SE 4</h3>
+                        <p>출고가: 700,000원</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="next-step-btn" disabled>다음 단계</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
