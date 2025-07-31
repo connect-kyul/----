@@ -96,72 +96,295 @@ h2 {
     color: #343a40;
 }
 
-/* 필터 및 검색 옵션 */
-.filter-options {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
+
+/* --- 새로운 필터 섹션 스타일 시작 --- */
+.filter-group-container {
+    display: flex; /* 두 개의 필터 박스를 가로로 정렬 */
+    gap: 30px; /* 필터 박스 사이 간격 */
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+    justify-content: center; /* 가운데 정렬 */
 }
 
-.filter-options select,
-.filter-options input[type="text"] {
-    padding: 12px 20px;
-    border: 1px solid #ced4da;
-    border-radius: 8px; /* 둥근 모서리 */
+.filter-box {
+    flex: 1; /* 가용한 공간을 균등하게 차지 */
+    min-width: 320px; /* 최소 너비 지정 */
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-box h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #343a40;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f1f3f5;
+    padding-bottom: 15px;
+}
+
+.filter-item {
+    margin-bottom: 25px;
+}
+
+.filter-item label {
+    display: block;
     font-size: 16px;
+    font-weight: 600;
     color: #495057;
-    outline: none; /* 포커스 시 기본 아웃라인 제거 */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 부드러운 전환 */
+    margin-bottom: 12px;
 }
 
-.filter-options select:focus,
-.filter-options input[type="text"]:focus {
-    border-color: #4CAF50; /* 포커스 시 포인트 컬러 테두리 */
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25); /* 포커스 시 그림자 */
+/* --- 슬라이더 필터 스타일 --- */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
 }
 
-/* 단말기 목록 그리드 */
+.slider-wrapper input[type="range"] {
+    width: 100%;
+    height: 8px; /* 슬라이더 트랙 높이 */
+    background: #e0e0e0; /* 기본 트랙 색상 */
+    border-radius: 5px;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* 슬라이더 트랙 색상 채우기 (진행 바) */
+.slider-wrapper input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #4CAF50 var(--value-percent), #e0e0e0 var(--value-percent));
+    border-radius: 5px;
+    height: 8px;
+    transition: background 0.1s ease;
+}
+.slider-wrapper input[type="range"]::-moz-range-track {
+    background: linear-gradient(to right, #4CAF50 var(--value-percent), #e0e0e0 var(--value-percent));
+    border-radius: 5px;
+    height: 8px;
+    transition: background 0.1s ease;
+}
+
+/* 슬라이더 썸(핸들) */
+.slider-wrapper input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #4CAF50; /* 포인트 컬러 */
+    cursor: grab;
+    margin-top: -8px; /* 트랙 중앙에 오도록 조정 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ffffff; /* 흰색 테두리 */
+    transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
+.slider-wrapper input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ffffff;
+    transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
+.slider-wrapper input[type="range"]:active::-webkit-slider-thumb,
+.slider-wrapper input[type="range"]:focus::-webkit-slider-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.3); /* 포커스/클릭 시 아웃라인 효과 */
+}
+.slider-wrapper input[type="range"]:active::-moz-range-thumb,
+.slider-wrapper input[type="range"]:focus::-moz-range-thumb {
+    cursor: grabbing;
+    box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.current-value {
+    position: absolute;
+    top: -30px; /* 슬라이더 위에 위치 */
+    left: var(--thumb-left, 0%); /* JS로 동적으로 위치 조절 */
+    transform: translateX(-50%);
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap; /* 값 줄바꿈 방지 */
+    opacity: 0; /* 초기에는 숨김 */
+    transition: opacity 0.2s ease;
+    pointer-events: none; /* 클릭 이벤트 방지 */
+}
+
+.slider-wrapper:hover .current-value,
+.slider-wrapper input[type="range"]:focus + .range-labels + .current-value,
+.slider-wrapper input[type="range"]:active + .range-labels + .current-value {
+    opacity: 1; /* 호버, 포커스, 액티브 시 보이기 */
+}
+
+
+/* --- 버튼 그룹 필터 스타일 --- */
+.button-group {
+    display: flex;
+    flex-wrap: wrap; /* 버튼이 많을 경우 줄바꿈 */
+    gap: 10px; /* 버튼 사이 간격 */
+}
+
+.filter-btn {
+    background-color: #f1f3f5; /* 기본 배경색 */
+    color: #495057; /* 기본 텍스트 색상 */
+    padding: 10px 18px;
+    border: 1px solid #e9ecef;
+    border-radius: 20px; /* 둥근 캡슐 형태 */
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    min-width: 80px; /* 최소 너비로 정렬 */
+}
+
+.filter-btn:hover {
+    background-color: #e2e6ea;
+    border-color: #ced4da;
+}
+
+.filter-btn.active {
+    background-color: #4CAF50; /* 선택된 버튼의 포인트 컬러 */
+    color: #ffffff;
+    border-color: #4CAF50;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* --- 검색 버튼 (각 필터 섹션 하단) --- */
+.filter-search-btn {
+    display: block;
+    width: 100%; /* 너비 100% */
+    background-color: #343a40; /* 어두운 색상 */
+    color: #ffffff;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 30px;
+}
+
+.filter-search-btn:hover {
+    background-color: #495057;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- 아코디언 (상세 스펙) 스타일 --- */
+.accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 15px 0;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    margin-top: 30px;
+}
+
+.accordion-header .toggle-icon {
+    font-size: 18px;
+    color: #6c757d;
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active .toggle-icon {
+    transform: rotate(180deg); /* 회전하여 위를 향하게 */
+}
+
+.accordion-header span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.accordion-description {
+    font-size: 14px;
+    color: #adb5bd;
+    margin-left: auto; /* 우측 정렬 */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.accordion-content {
+    max-height: 0; /* 초기에는 숨김 */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+    padding: 0 20px; /* 초기 패딩 0 */
+}
+
+.accordion-content.active {
+    max-height: 200px; /* 내용에 따라 조절, 충분히 큰 값으로 설정 */
+    padding: 20px; /* 확장될 때 패딩 적용 */
+    transition: max-height 0.5s ease-in, padding 0.3s ease-in 0.2s; /* 패딩 지연 적용 */
+}
+
+
+/* --- 기존 단말기 목록 및 다음 버튼 스타일은 유지 --- */
+/* 단말기 목록 */
 .device-list {
     display: grid;
-    /* 자동으로 열 너비를 조절하고 최소 220px, 최대 1fr로 설정하여 반응형 그리드를 만듭니다. */
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px; /* 그리드 항목 사이 간격 */
-    justify-content: center; /* 그리드 항목들을 가운데 정렬 */
+    gap: 25px;
+    justify-content: center;
+    margin-top: 40px; /* 필터 아래 여백 */
 }
 
-/* 단말기 카드 */
 .device-card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 20px;
     text-align: center;
-    cursor: pointer; /* 클릭 가능함을 나타내는 커서 */
-    transition: all 0.3s ease; /* 모든 속성 변화에 부드러운 전환 */
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 기본 그림자 */
-    position: relative; /* 선택 아이콘 위치 조정을 위해 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
 .device-card:hover {
-    border-color: #4CAF50; /* 호버 시 포인트 컬러 테두리 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 강조 */
-    transform: translateY(-3px); /* 살짝 위로 이동하는 효과 */
+    border-color: #4CAF50;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
 }
 
 .device-card.selected {
-    border: 2px solid #4CAF50; /* 선택 시 두꺼운 포인트 컬러 테두리 */
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); /* 선택 시 그림자 강조 */
+    border: 2px solid #4CAF50;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .device-card img {
     max-width: 150px;
     height: auto;
     margin-bottom: 15px;
-    border-radius: 8px; /* 이미지 둥근 모서리 */
+    border-radius: 8px;
 }
 
 .device-card h3 {
@@ -179,13 +402,13 @@ h2 {
 
 /* 선택 표시 아이콘 */
 .device-card.selected::after {
-    content: '✔'; /* 체크 표시 유니코드 */
+    content: '✔';
     position: absolute;
     top: 10px;
     right: 10px;
     background-color: #4CAF50;
     color: #ffffff;
-    border-radius: 50%; /* 원형 */
+    border-radius: 50%;
     width: 28px;
     height: 28px;
     display: flex;
@@ -202,34 +425,43 @@ h2 {
 }
 
 .next-step-btn {
-    background-color: #6c757d; /* 비활성화 시 기본 색상 */
+    background-color: #6c757d;
     color: #ffffff;
     padding: 15px 30px;
     font-size: 18px;
     font-weight: 600;
     border: none;
     border-radius: 8px;
-    cursor: not-allowed; /* 기본은 비활성화 커서 */
+    cursor: not-allowed;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    outline: none; /* 포커스 시 아웃라인 제거 */
+    outline: none;
 }
 
-/* 버튼이 비활성화되지 않았을 때의 스타일 */
 .next-step-btn:not([disabled]) {
-    background-color: #4CAF50; /* 활성화 시 포인트 컬러 */
-    cursor: pointer; /* 활성화 시 클릭 가능 커서 */
+    background-color: #4CAF50;
+    cursor: pointer;
 }
 
-/* 활성화된 버튼에 마우스를 올렸을 때의 스타일 */
 .next-step-btn:not([disabled]):hover {
-    background-color: #43a047; /* 호버 시 약간 어둡게 */
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4); /* 호버 시 그림자 */
+    background-color: #43a047;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
 }
 
 /* 반응형 디자인 */
+@media (max-width: 992px) {
+    .filter-group-container {
+        flex-direction: column; /* 세로로 정렬 */
+        align-items: center;
+    }
+    .filter-box {
+        width: 100%; /* 전체 너비 차지 */
+        max-width: 600px; /* 적절한 최대 너비 설정 */
+    }
+}
+
 @media (max-width: 768px) {
     .step-indicator {
-        flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+        flex-wrap: wrap;
         gap: 15px;
     }
 
@@ -247,30 +479,55 @@ h2 {
         font-size: 24px;
     }
 
-    .filter-options {
-        flex-direction: column; /* 세로로 정렬 */
-        align-items: stretch; /* 전체 너비 차지 */
-    }
-
-    .filter-options select,
-    .filter-options input[type="text"] {
-        width: 100%;
-    }
-
     .device-list {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 더 작은 최소 너비 */
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
     .device-card img {
         max-width: 120px;
     }
+
+    .filter-box {
+        padding: 20px;
+    }
+    .filter-box h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    .filter-item label {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .filter-search-btn {
+        font-size: 16px;
+        padding: 12px 15px;
+    }
+    .range-labels {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 480px) {
     .step-section {
-        padding: 20px;
+        padding: 15px;
     }
     .device-list {
-        grid-template-columns: 1fr; /* 모바일에서는 1열로 */
+        grid-template-columns: 1fr;
+    }
+    .current-value {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+    .filter-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+        min-width: unset; /* 모바일에서 최소 너비 제한 해제 */
+    }
+    .accordion-header span {
+        font-size: 16px;
+    }
+    .accordion-description {
+        font-size: 12px;
     }
 }
